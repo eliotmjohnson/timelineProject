@@ -49,10 +49,10 @@ function App() {
 		getSavedTimelines();
 	};
 
-	const clearTimelines = () => {
-		localStorage.clear();
-		getSavedTimelines();
-	};
+	// const clearTimelines = () => {
+	// 	localStorage.clear();
+	// 	getSavedTimelines();
+	// };
 
 	useEffect(() => {
 		getSavedTimelines();
@@ -66,7 +66,7 @@ function App() {
 					<button onClick={(e) => saveTimeline(e)}>Save</button>
 					<button onClick={(e) => loadTimeline(e)}>Load</button>
 					<button onClick={(e) => deleteTimeline(e)}>Delete</button>
-					<button onClick={(e) => clearTimelines(e)}>Clear</button>
+					{/* <button onClick={(e) => clearTimelines(e)}>Clear</button> */}
 					<ul>
 						<strong>Timelines:</strong>
 						{savedTimelines.map((timeline) => {

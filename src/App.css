@@ -36,9 +36,14 @@ body {
   display: flex;
   gap: 1rem;
   height: 1.5rem;
+  width: 15rem;
 }
 
 .save strong {
   font-weight: 800;
   text-decoration: underline;
+}
+
+.save ul {
+  max-width: none;
 }
