@@ -7,7 +7,7 @@ import Form from "./components/Form/Form";
 function App() {
 	const [events, setEvents] = useState([]);
 	const [savedTimelines, setSavedTimelines] = useState([]);
-	const nameInput = useRef();
+	const nameInput = useRef()
 
 	const saveTimeline = (e) => {
 		e.preventDefault();
