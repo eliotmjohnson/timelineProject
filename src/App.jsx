@@ -7,6 +7,7 @@ import Form from "./components/Form/Form";
 function App() {
 	const [events, setEvents] = useState([]);
 	const [savedTimelines, setSavedTimelines] = useState([]);
+	const [areYouSure, setAreYouSure] = useState(false);
 	const nameInput = useRef();
 
 	const saveTimeline = (e) => {
@@ -17,7 +18,6 @@ function App() {
 		}
 		const timeline = JSON.stringify(events);
 		localStorage.setItem(`${nameInput.current.value.toLowerCase()}`, timeline);
-		nameInput.current.value = "";
 		getSavedTimelines();
 	};
 
@@ -31,7 +31,6 @@ function App() {
 			return;
 		}
 		setEvents(data);
-		nameInput.current.value = "";
 	};
 
 	const getSavedTimelines = () => {
@@ -44,9 +43,30 @@ function App() {
 	};
 
 	const deleteTimeline = (e) => {
-		localStorage.removeItem(`${nameInput.current.value}`);
-		nameInput.current.value = "";
-		getSavedTimelines();
+		if (e.target.innerText === "Delete") {
+			const data = JSON.parse(
+				localStorage.getItem(`${nameInput.current.value.toLowerCase()}`)
+			);
+			if (!data) {
+				alert("We could not find that timeline");
+				return;
+			}
+			setAreYouSure(true);
+			return;
+		}
+
+		if (e.target.innerText === "No") {
+			setAreYouSure(false);
+			return;
+		}
+
+		if (e.target.innerText === "Yes") {
+			localStorage.removeItem(`${nameInput.current.value}`);
+			setAreYouSure(false);
+			nameInput.current.value = "";
+			getSavedTimelines();
+			return;
+		}
 	};
 
 	// const clearTimelines = () => {
@@ -60,6 +80,15 @@ function App() {
 
 	return (
 		<>
+			{areYouSure ? (
+				<div className="modal">
+					<h1>Are you sure you want to delete this Timeline</h1>
+					<div>
+						<button onClick={(e) => deleteTimeline(e)}>Yes</button>
+						<button onClick={(e) => deleteTimeline(e)}>No</button>
+					</div>
+				</div>
+			) : undefined}
 			<div className="save">
 				<input ref={nameInput} type="text" placeholder="Timeline Name" />
 				<div>
