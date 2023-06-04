@@ -9,7 +9,7 @@ function App() {
 	const [savedTimelines, setSavedTimelines] = useState([]);
 	const [areYouSure, setAreYouSure] = useState(false);
 	const [text, setText] = useState("");
-	const nameInput = useRef();
+	const nameInput = useRef()
 
 	const saveTimeline = (e) => {
 		e.preventDefault();
