@@ -8,6 +8,7 @@ function App() {
 	const [events, setEvents] = useState([]);
 	const [savedTimelines, setSavedTimelines] = useState([]);
 	const [areYouSure, setAreYouSure] = useState(false);
+	const [text, setText] = useState("");
 	const nameInput = useRef();
 
 	const saveTimeline = (e) => {
@@ -16,9 +17,21 @@ function App() {
 			alert("Timeline has to have a name");
 			return;
 		}
-		const timeline = JSON.stringify(events);
-		localStorage.setItem(`${nameInput.current.value.toLowerCase()}`, timeline);
-		getSavedTimelines();
+		if (e.target.innerText === "Save") {
+			setAreYouSure(true);
+			setText("Are you sure you want to save?");
+			return;
+		}
+		if (e.target.innerText === "Yes") {
+			const timeline = JSON.stringify(events);
+			localStorage.setItem(
+				`${nameInput.current.value.toLowerCase()}`,
+				timeline
+			);
+			setAreYouSure(false);
+			getSavedTimelines();
+			return;
+		}
 	};
 
 	const loadTimeline = (e) => {
@@ -51,6 +64,7 @@ function App() {
 				alert("We could not find that timeline");
 				return;
 			}
+			setText("Are you sure you want to delete this timeline?");
 			setAreYouSure(true);
 			return;
 		}
@@ -82,9 +96,17 @@ function App() {
 		<>
 			{areYouSure ? (
 				<div className="modal">
-					<h1>Are you sure you want to delete this Timeline</h1>
+					<h1>{text}</h1>
 					<div>
-						<button onClick={(e) => deleteTimeline(e)}>Yes</button>
+						<button
+							onClick={
+								text === "Are you sure you want to delete this timeline?"
+									? (e) => deleteTimeline(e)
+									: (e) => saveTimeline(e)
+							}
+						>
+							Yes
+						</button>
 						<button onClick={(e) => deleteTimeline(e)}>No</button>
 					</div>
 				</div>
