@@ -7,12 +7,16 @@
     gap: 1rem;
     align-items: center;
     bottom: 5rem;
+    z-index: 0;
 }
 
 .edit-form {
     position: static;
     padding: .4rem;
+    width: 10rem;
     border-radius: 1rem;
     background-color: aliceblue;
     box-shadow: 0 0 5px 0 rgb(139, 131, 131);
+    margin-left: -2rem;
+    margin-right: -2rem
 }

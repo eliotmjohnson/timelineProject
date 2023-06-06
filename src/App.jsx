@@ -131,6 +131,9 @@ function App() {
 					return (
 						<EventCard
 							key={i}
+							id={i}
+							height={event.height}
+							eventsLength={events.length}
 							setEvents={setEvents}
 							title={event.title}
 							date={event.date}

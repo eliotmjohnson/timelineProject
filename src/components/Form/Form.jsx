@@ -13,7 +13,7 @@ const Form = (props) => {
 
 		if (button === "Add") {
 			props.setEvents((prev) => {
-				return [...prev, { title: title, date: date, edit: false }].sort(
+				return [...prev, { title: title, date: date, edit: false, height: 5 }].sort(
 					(a, b) => {
 						const numA =
 							(a.date.toLowerCase().includes("bc") ? -1 : 1) *
@@ -29,8 +29,8 @@ const Form = (props) => {
 		if (button === "Save") {
 			props.setEvents((prev) => {
 				return prev
-					.map((event) => {
-						if (event.title === props.title) {
+					.map((event, id) => {
+						if (id === props.id) {
 							return { ...event, date: date, title: title, edit: false };
 						} else return event;
 					})
@@ -46,8 +46,8 @@ const Form = (props) => {
 			});
 		}
 
-		titleInput.current.value = "";
-		dateInput.current.value = "";
+		// titleInput.current.value = "";
+		// dateInput.current.value = "";
 	};
 
 	return (

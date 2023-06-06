@@ -2,29 +2,57 @@ import "./EventCard.css";
 import Form from "../Form/Form";
 
 const EventCard = (props) => {
-	const deleteEvent = (title) => {
+	const deleteEvent = (id) => {
 		props.setEvents((prev) => {
-			return prev.filter((event) => {
-				return event.title !== title;
+			return prev.filter((event, i) => {
+				return i !== id;
 			});
 		});
 	};
 
-	const handleClick = (title) => {
+	const handleClick = (id) => {
 		props.setEvents((prev) => {
-			return prev.map((event) => {
-				if (event.title === title) {
+			return prev.map((event, i) => {
+				if (i === id) {
 					return { ...event, edit: !event.edit };
 				} else return event;
 			});
 		});
 	};
 
+	const increaseHeight = (id) => {
+		props.setEvents((prev) => {
+			return prev.map((event, i) => {
+				if (i === id) {
+					return { ...event, height: event.height + 5 };
+				} else return event;
+			});
+		});
+	};
+
+	const decreaseHeight = (id) => {
+		props.setEvents((prev) => {
+			return prev.map((event, i) => {
+				if (i === id) {
+					return { ...event, height: event.height - 5 };
+				} else return event;
+			});
+		});
+	};
+
+	const scale = (100 - props.eventsLength * 0.9) / 100;
+
+	const style = {
+		scale: `${scale}`,
+	};
+
 	return (
-		<div className="event">
-			<button onClick={() => handleClick(props.title)}>Edit</button>
+		<div className="event" style={style}>
+			<button onClick={() => increaseHeight(props.id)}>+</button>
+			<button onClick={() => handleClick(props.id)}>Edit</button>
 			{props.edit ? (
 				<Form
+					id={props.id}
 					title={props.title}
 					date={props.date}
 					extraClasses={"edit-form"}
@@ -34,11 +62,15 @@ const EventCard = (props) => {
 			) : (
 				<>
 					<h1>{props.title}</h1>
-					<div className="event-bar"></div>
+					<div
+						className="event-bar"
+						style={{ height: `${props.height}rem` }}
+					></div>
 					<h2>{props.date}</h2>
-					<button onClick={() => deleteEvent(props.title)}>Delete</button>
+					<button onClick={() => deleteEvent(props.id)}>Delete</button>
 				</>
 			)}
+			<button onClick={() => decreaseHeight(props.id)}>-</button>
 		</div>
 	);
 };
