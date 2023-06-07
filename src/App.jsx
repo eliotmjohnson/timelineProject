@@ -9,6 +9,7 @@ function App() {
 	const [savedTimelines, setSavedTimelines] = useState([]);
 	const [areYouSure, setAreYouSure] = useState(false);
 	const [text, setText] = useState("");
+	const [hideAll, setHideAll] = useState(false);
 	const nameInput = useRef();
 
 	const saveTimeline = (e) => {
@@ -92,6 +93,10 @@ function App() {
 		getSavedTimelines();
 	}, []);
 
+	const showTimeline = () => {
+		setHideAll((prev) => !prev);
+	};
+
 	return (
 		<>
 			{areYouSure ? (
@@ -111,27 +116,30 @@ function App() {
 					</div>
 				</div>
 			) : undefined}
-			<div className="save">
-				<input ref={nameInput} type="text" placeholder="Timeline Name" />
-				<div>
-					<button onClick={(e) => saveTimeline(e)}>Save</button>
-					<button onClick={(e) => loadTimeline(e)}>Load</button>
-					<button onClick={(e) => deleteTimeline(e)}>Delete</button>
-					{/* <button onClick={(e) => clearTimelines(e)}>Clear</button> */}
-					<ul>
-						<strong>Timelines:</strong>
-						{savedTimelines.map((timeline) => {
-							return <li key={timeline}>{timeline}</li>;
-						})}
-					</ul>
+			{hideAll ? undefined : (
+				<div className="save">
+					<input ref={nameInput} type="text" placeholder="Timeline Name" />
+					<div>
+						<button onClick={(e) => saveTimeline(e)}>Save</button>
+						<button onClick={(e) => loadTimeline(e)}>Load</button>
+						<button onClick={(e) => deleteTimeline(e)}>Delete</button>
+						{/* <button onClick={(e) => clearTimelines(e)}>Clear</button> */}
+						<ul>
+							<strong>Timelines:</strong>
+							{savedTimelines.map((timeline) => {
+								return <li key={timeline}>{timeline}</li>;
+							})}
+						</ul>
+					</div>
 				</div>
-			</div>
+			)}
 			<div className="timeline">
 				{events.map((event, i) => {
 					return (
 						<EventCard
 							key={i}
 							id={i}
+							hideAll={hideAll}
 							height={event.height}
 							eventsLength={events.length}
 							setEvents={setEvents}
@@ -142,7 +150,12 @@ function App() {
 					);
 				})}
 			</div>
-			<Form buttonTitle="Add" setEvents={setEvents}></Form>
+			{hideAll ? undefined : (
+				<Form buttonTitle="Add" setEvents={setEvents}></Form>
+			)}
+			<button className="show-all" onClick={showTimeline}>
+				Toggle Timeline View
+			</button>
 		</>
 	);
 }

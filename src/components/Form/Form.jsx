@@ -46,8 +46,8 @@ const Form = (props) => {
 			});
 		}
 
-		// titleInput.current.value = "";
-		// dateInput.current.value = "";
+		titleInput.current.value = "";
+		dateInput.current.value = "";
 	};
 
 	return (

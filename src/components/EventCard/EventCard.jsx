@@ -48,8 +48,12 @@ const EventCard = (props) => {
 
 	return (
 		<div className="event" style={style}>
-			<button onClick={() => increaseHeight(props.id)}>+</button>
-			<button onClick={() => handleClick(props.id)}>Edit</button>
+			{props.hideAll ? undefined : (
+				<>
+					<button onClick={() => increaseHeight(props.id)}>+</button>
+					<button onClick={() => handleClick(props.id)}>Edit</button>
+				</>
+			)}
 			{props.edit ? (
 				<Form
 					id={props.id}
@@ -67,10 +71,14 @@ const EventCard = (props) => {
 						style={{ height: `${props.height}rem` }}
 					></div>
 					<h2>{props.date}</h2>
-					<button onClick={() => deleteEvent(props.id)}>Delete</button>
+					{props.hideAll ? undefined : (
+						<button onClick={() => deleteEvent(props.id)}>Delete</button>
+					)}
 				</>
 			)}
-			<button onClick={() => decreaseHeight(props.id)}>-</button>
+			{props.hideAll ? undefined : (
+				<button onClick={() => decreaseHeight(props.id)}>-</button>
+			)}
 		</div>
 	);
 };
