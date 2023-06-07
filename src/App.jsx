@@ -48,7 +48,7 @@ function App() {
 	};
 
 	const getSavedTimelines = () => {
-		let timelineArr = [];
+		let timelineArr = []
 		const timelines = { ...localStorage };
 		for (let x in timelines) {
 			timelineArr.push(x);
