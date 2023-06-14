@@ -10,7 +10,7 @@ function App() {
 	const [areYouSure, setAreYouSure] = useState(false);
 	const [text, setText] = useState("");
 	const [hideAll, setHideAll] = useState(false);
-	const [hideInputs, setHideInputs] = useState(false)
+	const [hideInputs, setHideInputs] = useState(false);
 	const nameInput = useRef();
 
 	const saveTimeline = (e) => {
@@ -49,7 +49,7 @@ function App() {
 	};
 
 	const getSavedTimelines = () => {
-		let timelineArr = []
+		let timelineArr = [];
 		const timelines = { ...localStorage };
 		for (let x in timelines) {
 			timelineArr.push(x);
@@ -100,8 +100,7 @@ function App() {
 
 	const toggleInputs = () => {
 		setHideInputs((prev) => !prev);
-	}
-
+	};
 	return (
 		<>
 			{areYouSure ? (
@@ -151,6 +150,7 @@ function App() {
 							title={event.title}
 							date={event.date}
 							edit={event.edit}
+							position={event.position}
 						></EventCard>
 					);
 				})}

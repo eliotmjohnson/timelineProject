@@ -1,9 +1,7 @@
 import "./EventCard.css";
-import { useState } from "react";
 import Form from "../Form/Form";
 
 const EventCard = (props) => {
-	const [position, setPosition] = useState(0)
 	const deleteEvent = (id) => {
 		props.setEvents((prev) => {
 			return prev.filter((event, i) => {
@@ -42,19 +40,31 @@ const EventCard = (props) => {
 		});
 	};
 
-	const translateRight = () => {
-		setPosition((prev) => prev + .5)
-	}
+	const translateRight = (id) => {
+		props.setEvents((prev) => {
+			return prev.map((event, i) => {
+				if (i === id) {
+					return { ...event, position: event.position + 1 };
+				} else return event;
+			});
+		});
+	};
 
-	const translateLeft = () => {
-		setPosition((prev) => prev - .5)
-	}
+	const translateLeft = (id) => {
+		props.setEvents((prev) => {
+			return prev.map((event, i) => {
+				if (i === id) {
+					return { ...event, position: event.position - 1 };
+				} else return event;
+			});
+		});
+	};
 
 	const scale = (100 - props.eventsLength * 0.9) / 100;
 
 	const style = {
 		scale: `${scale}`,
-		translate: `${position}rem 0`
+		translate: `${props.position}rem 0`,
 	};
 
 	return (
@@ -63,8 +73,8 @@ const EventCard = (props) => {
 				<>
 					<button onClick={() => increaseHeight(props.id)}>+</button>
 					<div className="translate">
-						<button onClick={translateLeft}>&#8592;</button>
-						<button onClick={translateRight}>&#8594;</button>
+						<button onClick={() => translateLeft(props.id)}>&#8592;</button>
+						<button onClick={() => translateRight(props.id)}>&#8594;</button>
 					</div>
 					<button onClick={() => handleClick(props.id)}>Edit</button>
 				</>

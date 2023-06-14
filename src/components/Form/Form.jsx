@@ -13,17 +13,18 @@ const Form = (props) => {
 
 		if (button === "Add") {
 			props.setEvents((prev) => {
-				return [...prev, { title: title, date: date, edit: false, height: 5 }].sort(
-					(a, b) => {
-						const numA =
-							(a.date.toLowerCase().includes("bc") ? -1 : 1) *
-							a.date.replace(/\D/g, "");
-						const numB =
-							(b.date.toLowerCase().includes("bc") ? -1 : 1) *
-							b.date.replace(/\D/g, "");
-						return numA - numB;
-					}
-				);
+				return [
+					...prev,
+					{ title: title, date: date, edit: false, height: 5, position: 0 },
+				].sort((a, b) => {
+					const numA =
+						(a.date.toLowerCase().includes("bc") ? -1 : 1) *
+						a.date.replace(/\D/g, "");
+					const numB =
+						(b.date.toLowerCase().includes("bc") ? -1 : 1) *
+						b.date.replace(/\D/g, "");
+					return numA - numB;
+				});
 			});
 		}
 		if (button === "Save") {
