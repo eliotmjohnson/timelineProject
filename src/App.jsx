@@ -10,6 +10,7 @@ function App() {
 	const [areYouSure, setAreYouSure] = useState(false);
 	const [text, setText] = useState("");
 	const [hideAll, setHideAll] = useState(false);
+	const [hideInputs, setHideInputs] = useState(false)
 	const nameInput = useRef();
 
 	const saveTimeline = (e) => {
@@ -97,6 +98,10 @@ function App() {
 		setHideAll((prev) => !prev);
 	};
 
+	const toggleInputs = () => {
+		setHideInputs((prev) => !prev);
+	}
+
 	return (
 		<>
 			{areYouSure ? (
@@ -116,7 +121,7 @@ function App() {
 					</div>
 				</div>
 			) : undefined}
-			{hideAll ? undefined : (
+			{hideInputs ? undefined : (
 				<div className="save">
 					<input ref={nameInput} type="text" placeholder="Timeline Name" />
 					<div>
@@ -150,12 +155,13 @@ function App() {
 					);
 				})}
 			</div>
-			{hideAll ? undefined : (
+			{hideInputs ? undefined : (
 				<Form buttonTitle="Add" setEvents={setEvents}></Form>
 			)}
 			<button className="show-all" onClick={showTimeline}>
-				Toggle Timeline View
+				Toggle Edit Buttons
 			</button>
+			<button onClick={toggleInputs}>Toggle Forms</button>
 		</>
 	);
 }
